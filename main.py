@@ -1,15 +1,37 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtGui import QPainter, QColor
-from PyQt5 import uic
-from PyQt5 import QtCore
 import random
+from PyQt5 import QtCore, QtWidgets
 
 
-class Example(QMainWindow):
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(330, 530, 113, 32))
+        self.pushButton.setObjectName("pushButton")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.pushButton.setText(_translate("MainWindow", "Нажать"))
+
+
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.buttn)
         self.draw1 = False
 
@@ -26,7 +48,8 @@ class Example(QMainWindow):
         s = random.randint(4, 50)
         x = random.randint(0, 700)
         y = random.randint(0, 500)
-        qp.setBrush(QColor(245, 224, 66))
+        one, two, thr = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+        qp.setBrush(QColor(one, two, thr))
         qp.drawEllipse(x, y, s, s)
 
     def buttn(self):
